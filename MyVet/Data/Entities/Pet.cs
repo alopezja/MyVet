@@ -23,8 +23,8 @@ namespace MyVet.Web.Data.Entities
 
         [Display(Name = "Born")]
         [Required(ErrorMessage = "The field {0} is mandatory.")]
-        [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)] //For me
         public DateTime Born { get; set; }
 
         public string Remarks { get; set; }
@@ -36,6 +36,7 @@ namespace MyVet.Web.Data.Entities
 
         [Display(Name = "Born")]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
+        [DataType(DataType.Date)] //For me
         public DateTime BornLocal => Born.ToLocalTime();
 
         public PetType PetType { get; set; }
