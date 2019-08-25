@@ -401,5 +401,25 @@ namespace MyVet.Web.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> DeleteHistory(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var history = await _dataContext.Histories
+                .Include(h => h.Pet)
+                .FirstOrDefaultAsync(h => h.Id == id.Value);
+            if (history == null)
+            {
+                return NotFound();
+            }
+
+            _dataContext.Histories.Remove(history);
+            await _dataContext.SaveChangesAsync();
+            return RedirectToAction($"{nameof(DetailsPet)}/{history.Pet.Id}");
+        }
+
     }
 }
