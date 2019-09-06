@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyVet.Common.Models;
 using MyVet.Data;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,6 +11,7 @@ namespace MyVet.Web.Controllers.API
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class OwnersController : ControllerBase
     {
         private readonly DataContext _dataContext;
@@ -21,7 +22,7 @@ namespace MyVet.Web.Controllers.API
         }
 
         [HttpPost]
-        [Route ("GetOwnerByEmail")]
+        [Route("GetOwnerByEmail")]
         public async Task<IActionResult> GetOwner(EmailRequest emailRequest)
         {
             if (!ModelState.IsValid)
@@ -67,7 +68,7 @@ namespace MyVet.Web.Controllers.API
                 }).ToList()
             };
 
-            return Ok (response);
+            return Ok(response);
         }
     }
 }
