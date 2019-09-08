@@ -11,6 +11,7 @@ namespace MyVet.Prism.ViewModels
 {
     public class LoginPageViewModel : ViewModelBase
     {
+        private readonly INavigationService _navigationService;
         private readonly IApiService _apiService;
         private string _password;
         private bool _isRunning;
@@ -21,6 +22,7 @@ namespace MyVet.Prism.ViewModels
             INavigationService navigationService,
             IApiService apiService) : base (navigationService)
         {
+            _navigationService = navigationService;
             _apiService = apiService;
             Title = "Login";
             IsEnabled = true;
@@ -85,7 +87,7 @@ namespace MyVet.Prism.ViewModels
                 return;
             }
 
-            await App.Current.MainPage.DisplayAlert("OK", "Fuck yeah...", "Accept");
+            await _navigationService.NavigateAsync("PetsPage");
 
         }
 
