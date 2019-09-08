@@ -32,7 +32,7 @@ namespace MyVet.Web.Data.Entities
         //TODO: replace the correct URL for the image
         public string ImageFullPath => string.IsNullOrEmpty(ImageUrl)
             ? null
-            : $"https://TDB.azurewebsites.net{ImageUrl.Substring(1)}"; //Here I must writhe the URL for the repository of Images of Pets
+            : $"https://myvetapp.azurewebsites.net{ImageUrl.Substring(1)}"; //Here I must writhe the URL for the repository of Images of Pets
 
         [Display(Name = "Born")]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
