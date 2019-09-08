@@ -77,17 +77,37 @@ namespace MyVet.Prism.ViewModels
             var url = App.Current.Resources["UrlAPI"].ToString();
             var response = await _apiService.GetTokenAsync(url, "/Account", "/CreateToken", request);
 
-            IsRunning = false;
-            IsEnabled = true;
-
             if (!response.IsSuccess)
             {
+                IsRunning = false;
+                IsEnabled = true;
                 await App.Current.MainPage.DisplayAlert("Error", "User or password incorrect.", "Accept");
                 Password = string.Empty;
                 return;
             }
 
-            await _navigationService.NavigateAsync("PetsPage");
+            var token = (TokenResponse)response.Result;
+            var response2 = await _apiService.GetOwnerByEmailAsync(url, "api", "/Owners/GetOwnerByEmail", "bearer", token.Token, Email);
+
+            if (!response2.IsSuccess)
+            {
+                IsRunning = false;
+                IsEnabled = true;
+                await App.Current.MainPage.DisplayAlert("Error", "This user have a big problem, call support.", "Accept");
+                return;
+            }
+
+            var owner = (OwnerResponse)response2.Result;
+            var parameters = new NavigationParameters
+            {
+                { "owner", owner }
+            };
+
+            IsRunning = false;
+            IsEnabled = true;
+
+            await _navigationService.NavigateAsync("PetsPage", parameters);
+            Password = string.Empty;
 
         }
 
