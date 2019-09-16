@@ -18,6 +18,8 @@ namespace MyVet.Prism.ViewModels
         private bool _isEnabled;
         private DelegateCommand _loginCommand;
 
+        // Test github
+
         public LoginPageViewModel(
             INavigationService navigationService,
             IApiService apiService) : base (navigationService)
